@@ -10,59 +10,59 @@
     <?php
     session_start(); // Keep this line here, at the very beginning of your PHP block
 
-    include 'koneksi.php';
+    include 'koneksi.php'; //
 
-    $displayMessage = '';
-    $messageType = '';
+    $displayMessage = ''; //
+    $messageType = ''; //
 
-    if (isset($_SESSION['message'])) {
-        $displayMessage = htmlspecialchars($_SESSION['message']);
-        $messageType = htmlspecialchars($_SESSION['message_type'] ?? 'info');
-        unset($_SESSION['message']);
-        unset($_SESSION['message_type']);
+    if (isset($_SESSION['message'])) { //
+        $displayMessage = htmlspecialchars($_SESSION['message']); //
+        $messageType = htmlspecialchars($_SESSION['message_type'] ?? 'info'); //
+        unset($_SESSION['message']); //
+        unset($_SESSION['message_type']); //
     }
-    else if (isset($_GET['message'])) {
-        $displayMessage = htmlspecialchars($_GET['message']);
-        $messageType = strpos($displayMessage, 'Error') !== false ? 'error' : 'success';
-    }
-
-    if (!empty($displayMessage)) {
-        echo "<div id='statusMessage' class='message {$messageType}'>";
-        echo "<span class='closebtn' onclick='this.parentElement.style.display=\"none\";'>&times;</span>";
-        echo $displayMessage;
-        echo "</div>";
+    else if (isset($_GET['message'])) { //
+        $displayMessage = htmlspecialchars($_GET['message']); //
+        $messageType = strpos($displayMessage, 'Error') !== false ? 'error' : 'success'; //
     }
 
-    $hasil = mysqli_query($connection, "SELECT * FROM tb_mahasiswa");
-    echo "<h1>DATA MAHASISWA</h1>";
+    if (!empty($displayMessage)) { //
+        echo "<div id='statusMessage' class='message {$messageType}'>"; //
+        echo "<span class='closebtn' onclick='this.parentElement.style.display=\"none\";'>&times;</span>"; //
+        echo $displayMessage; //
+        echo "</div>"; //
+    }
 
-    if (mysqli_num_rows($hasil) > 0) {
-        echo "<table>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th>Nama Mahasiswa</th>";
-        echo "<th>Prodi Mahasiswa</th>";
-        echo "<th>Semester Mahasiswa</th>";
-        echo "<th>Aksi</th>";
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
+    $hasil = mysqli_query($connection, "SELECT * FROM tb_mahasiswa"); //
+    echo "<h1>DATA MAHASISWA</h1>"; //
 
-        while ($data = mysqli_fetch_array($hasil)){
-            echo "<tr>";
-            echo "<td>" . $data['nama_mahasiswa'] . "</td>";
-            echo "<td>" . $data['prodi_mahasiswa'] . "</td>";
-            echo "<td>" . $data['semester_mahasiswa'] . "</td>";
-            echo "<td>";
-            echo "<a href='update.php?id=" . $data['id_mahasiswa'] . "' class='btn btn-edit'>Edit</a> ";
-            echo "<a href='delete.php?id=" . $data['id_mahasiswa'] . "' class='btn btn-delete' onclick=\"return confirm('Anda yakin ingin menghapus data ini?');\">Hapus</a>";
-            echo "</td>";
-            echo "</tr>";
+    if (mysqli_num_rows($hasil) > 0) { //
+        echo "<table>"; //
+        echo "<thead>"; //
+        echo "<tr>"; //
+        echo "<th>Nama Mahasiswa</th>"; //
+        echo "<th>Prodi Mahasiswa</th>"; //
+        echo "<th>Semester Mahasiswa</th>"; //
+        echo "<th>Aksi</th>"; //
+        echo "</tr>"; //
+        echo "</thead>"; //
+        echo "<tbody>"; //
+
+        while ($data = mysqli_fetch_array($hasil)){ //
+            echo "<tr>"; //
+            echo "<td data-label='Nama Mahasiswa'>" . $data['nama_mahasiswa'] . "</td>";
+            echo "<td data-label='Prodi Mahasiswa'>" . $data['prodi_mahasiswa'] . "</td>";
+            echo "<td data-label='Semester Mahasiswa'>" . $data['semester_mahasiswa'] . "</td>";
+            echo "<td data-label='Aksi'>";
+            echo "<a href='update.php?id=" . $data['id_mahasiswa'] . "' class='btn btn-edit'>Edit</a> "; //
+            echo "<a href='delete.php?id=" . $data['id_mahasiswa'] . "' class='btn btn-delete' onclick=\"return confirm('Anda yakin ingin menghapus data ini?');\">Hapus</a>"; //
+            echo "</td>"; //
+            echo "</tr>"; //
         }
-        echo "</tbody>";
-        echo "</table>";
+        echo "</tbody>"; //
+        echo "</table>"; //
     } else {
-        echo "<p>Tidak ada data mahasiswa.</p>";
+        echo "<p>Tidak ada data mahasiswa.</p>"; //
     }
     ?>
 
